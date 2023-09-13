@@ -33,17 +33,18 @@ Technical Story:
 
 ## Decision Outcome
 
-Chosen option: "CLI со Spring Shell", because ...
+Chosen option: "CLI со Spring Shell", because относительно быстро, просто пользоваться, подходит под типовую архитектуру
 
-### Positive Consequences <!-- optional -->
+### Positive Consequences
 
-* [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
-* …
+* Относительно простое решение, не долго делать
+* Дает возможность писать приложение с типовой архитектурой
+* Нет необходимости дополнительно обеспечивать безопасность так как работает в пределах одной сессии
 
-### Negative Consequences <!-- optional -->
+### Negative Consequences
 
-* [e.g., compromising quality attribute, follow-up decisions required, …]
-* …
+* Более треудозатратно чем взаимодействие через аргументы функции `main(Strin[] args...)`
+* Нужно заносить зависимости в контур безопасности
 
 ## Pros and Cons of the Options <!-- optional -->
 
@@ -53,6 +54,7 @@ Chosen option: "CLI со Spring Shell", because ...
 
 * Good, because Работающее и хорошо знакомое средство
 * Good, because Дает гибкие возможности для реализации тонких клиентов
+* Good, because Дает возможность писать приложение с типовой архитектурой
 * Bad, because Самое затратное
 * Bad, because Нужно дополнительно настраивать безопасность
 * Bad, because Для реализации интеактивности нужен отдельный клиент
@@ -62,9 +64,10 @@ Chosen option: "CLI со Spring Shell", because ...
 Консольное приложение выполняющее команды последовательно с возможностью интерактивного взаимодействия
 
 * Good, because Относительно простое решение, не долго делать
-* Good, because Безопасность не обеспечивается так как работает в пределах одной сессии
-* Bad, because более треудозатратно чем взаимодействие через аргументы функции `main(Strin[] args...)`
-* Нужно заносить зависимости в контур безопасности
+* Good, because Дает возможность писать приложение с типовой архитектурой
+* Good, because Нет необходимости дополнительно обеспечивать безопасность так как работает в пределах одной сессии
+* Bad, because Более треудозатратно чем взаимодействие через аргументы функции `main(Strin[] args...)`
+* Bad, because Нужно заносить зависимости в контур безопасности
 
 ### CLI без интерактивности
 
