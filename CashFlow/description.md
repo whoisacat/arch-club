@@ -40,7 +40,7 @@
 
 ## Нефункциональные требования
 
-[Анализ требований](https://github.com/whoisacat/cash-flow/blob/cash-flow/CashFlow/requirements.md) выявил ряд нефункциональных 
+[Анализ требований](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/requirements.md) выявил ряд нефункциональных 
 требований для отдельных частей системы, так они будут выглядеть в приоритетном порядке:
 - Agility
 - Simplicity
@@ -60,13 +60,12 @@
 не выбирается.
 
 ## Общий контекст платформы
-![Схема системы с контекстом](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/files/app-context.png?raw=true&sanitize=true#gh-light-mode-only)
-![Схема системы с контекстом](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/files/app-context-dark.png?raw=true&sanitize=true#gh-dark-mode-only)
+![Схема системы с контекстом](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/pics/app-context.png?raw=true&sanitize=true#gh-light-mode-only)
+![Схема системы с контекстом](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/pics/app-context-dark.png?raw=true&sanitize=true#gh-dark-mode-only)
 
 ## Пользовательский опыт
-![Схема системы с контекстом](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/files/golden-path.png?raw=true&sanitize=true#gh-light-mode-only)
-![Схема системы с контекстом](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/files/golden-path-dark.png?raw=true&sanitize=true#gh-dark-mode-only)
-
+![Схема системы с контекстом](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/pics/golden-path.png?raw=true&sanitize=true#gh-light-mode-only)
+![Схема системы с контекстом](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/pics/golden-path-dark.png?raw=true&sanitize=true#gh-dark-mode-only)
 
 ## Допущения
 
@@ -84,11 +83,84 @@
 
 [Reference](https://aws.amazon.com/blogs/publicsector/achieving-five-nines-cloud-justice-public-safety/#:~:text=The%20accepted%20availability%20standard%20for,system%20must%20work%20seamlessly%20together.)
 
+## Роли пользователей
+
+Для каждого пользователя предусмотрено собственное пространство в данных для ведения бюджета. Доступ к чужому 
+пространству должен быть ограничен. Пользователь должен иметь возможность предоставлять доступ другим определенным 
+пользователям к своим отдельным бюджетным категориям. В связи с этим для каждого имеющего доступ к пространству 
+пользователя должны быть определены следующие роли в этом пространстве:
+- Владелец пространства;
+- Редактирование определенной бюджетной категории пространства;
+- Чтение определенной бюджетной категории пространства.
+
 ## Структура
+
+Ядро системы состоит из ряда компонентов с различными нефункциональными требованиями и типами взаимодействия, поэтому 
+оно было разделено на кванты, независимые компоненты системы с высокой внутренней связностью и низкой связанностью с 
+другими частями системы. Для каждого кванта предполагается определить свой тип архитектуры. Определение ядра системы и 
+разделение компонентов ядра на кванты 
+[подробнее приведено по ссылке](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/structure.md).
+
+Квант
+- [Бюджетирование](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/quanta/budgeting.md)
+- [Инструменты учета](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/quanta/accounting-tools.md)
+- [Оповещение](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/quanta/notifications.md)
+- [Аудит (History)](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/quanta/history.md)
+- [Аналитика](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/quanta/analitics.md)
+
+Другие сервисы
+- [Аутентификация и авторизация](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/other-services/auth.md)
+- [Клиентский веб интерфейс](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/other-services/web-ui.md)
+- [Инфраструктурные сервисы](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/other-services/infrastructure.md)
+
+### Обобщение архитектуры
+
+#### Логическое представление
+
+![Логическое представление](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/pics/logical-view.png?raw=true&sanitize=true#gh-light-mode-only)
+![Логическое представление](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/pics/logical-view-dark.png?raw=true&sanitize=true#gh-dark-mode-only)
+
+#### Физическое представление
+
+![физическое представление](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/pics/phisical-view.png?raw=true&sanitize=true#gh-light-mode-only)
+![физическое представление](https://github.com/whoisacat/arch-club/blob/cash-flow/CashFlow/pics/phisical-view-dark.png?raw=true&sanitize=true#gh-dark-mode-only)
 
 ## Дорожная карта
 
 ### MVP
+Предполагается, что MVP решит ключевые болевые точки потребителя. Сервис в первую очередь разрабатывается для 
+собственного потребления и как песочница для новых для разработчика технологий, поэтому может показаться, что 
+требования четко определены. Но после стадии пробного использования всегда находятся недостатки в логике и нарекания в 
+работоспособности. После α версии планируется найти пользователей для β версии и получить от них обратную связь. Этого 
+должно быть достаточно, чтобы получить обратную связь от рынка и при необходимости добавить или изменить требования к 
+системе.
 
-### Долгосрочные планы
+Области, требующие рассмотрения (в порядке приоритетности):
+* Квант Бюджетирование
+  * MVP - модульный монолит
+* Инструменты учета
+* Оповещение
+  * сначала email
+* Аудит (History)
+* Клиентский WEB-интерфейс
+  * самый простой
+* Аутентификация и авторизация
+  * только для единоличного использования
+* API-шлюз
+* CI/CD
+  * Сборка, публикация и деплой docker-compose скриптами
 
+### Долгосрочные планы (LT)
+
+Области, которые следует рассмотреть:
+
+* Другие инфраструктурные сервисы
+* Бюджетирование (переход на микросервисы + управление событиями)
+* Аналитика
+* Клиентский веб интерфейс
+  * наращивание клиентских каналов, совершенствование UX существующих каналов
+* Оповещение
+  * Наращивание каналов оповещения вслед за наращиванием клиентских каналов
+* Аутентификация и авторизация
+  * Выстраивание совместного редактирования и просмотра
+  * Разработка сервиса биллинга и пересмотр архитектуры в связи с появлением нового ключевого сервиса
