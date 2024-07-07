@@ -1,0 +1,182 @@
+components:
+
+#  roles:
+#    title: Roles
+#    entity: boundary
+
+#  external_system:
+#    title: External systems
+#    entity: label
+
+  space_owner:
+    title: Space owner
+    entity: actor
+    links:
+      - title: Sends emails\nfor user
+        id: email_system
+        direction: <..[#green].
+      - title: Sends push\nnotifications
+        id: cash_flow_system
+        direction: <..[#green].
+      - title: Sends\nnotifications
+        id: telegram_api
+        direction: <-[#green]-
+      - title: Sends queries\nto bots
+        id: telegram_api
+        direction: -[#red]->
+
+  space_redactor:
+    title: Space redactor
+    entity: actor
+    links:
+      - title: Sends push\nnotifications
+        id: cash_flow_system
+        direction: <..[#green].
+      - title: Sends\nnotifications
+        id: telegram_api
+        direction: <-[#green]-
+      - title: Sends queries\nto bots
+        id: telegram_api
+        direction: -[#red]->
+
+  space_reader:
+    title: Space reader
+    entity: actor
+    links:
+      - title: Sends push\nnotifications
+        id: cash_flow_system
+        direction: <..[#green].
+      - title: Sends\nnotifications
+        id: telegram_api
+        direction: <-[#green]-
+      - title: Sends queries\nto bots
+        id: telegram_api
+        direction: -[#red]->
+
+  cash_flow_system:
+    title: cash-flow
+    entity: component
+    links:
+      - title: Record and read\nrevenues and expenses
+        id: space_owner
+        direction: <-[#red]-
+      - title: Record and read\nrevenues and expenses
+        id: space_redactor
+        direction: <-[#red]-
+      - title: Read revenues\nand expenses
+        id: space_reader
+        direction: <-[#blue]-
+
+  cash_flow_system.web_ui_server:
+    title: WEB UI
+    entity: component
+    links:
+      - title: Read revenues\nand expenses
+        id: space_reader
+        direction: <-[#blue]-
+      - title: Record and read\nrevenues and expenses
+        id: space_owner
+        direction: <-[#red]-
+      - title: Record and read\nrevenues and expenses
+        id: space_redactor
+        direction: <-[#red]-
+
+  cash_flow_system.mobile_app:
+    title: Mobile App
+    entity: component
+    links:
+      - title: Read revenues\nand expenses
+        id: space_reader
+        direction: <-[#blue]-
+      - title: Record and read\nrevenues and expenses
+        id: space_owner
+        direction: <-[#red]-
+      - title: Record and read\nrevenues and expenses
+        id: space_redactor
+        direction: <-[#red]-
+
+  cash_flow_system.telegramm_bot:
+    title: Tg bot
+    entity: component
+    links:
+      - title: Read revenues\nand expenses
+        id: space_reader
+        direction: <-[#blue]-
+      - title: Record and read\nrevenues and expenses
+        id: space_owner
+        direction: <-[#red]-
+      - title: Record and read\nrevenues and expenses
+        id: space_redactor
+        direction: <-[#red]-
+
+  external_notification_system:
+    title: FCM
+    entity: cloud
+    links:
+      - title: Sends notifications\nto customers
+        id: cash_flow_system.mobile_app
+        direction: -->
+      - title: Sends notifications\nto customers
+        id: cash_flow_system.mobile_app
+        direction: <--
+      - title: Sends notifications\nto customers
+        id: cash_flow_system
+        direction: -->
+      - title: Sends notifications\nto customers
+        id: cash_flow_system
+        direction: <--
+
+  telegram_api:
+    title: Telegram\nAPI
+    entity: cloud
+    links:
+      - title: Sends queries\nfrom bots
+        id: cash_flow_system
+        direction: -->
+      - title: Sends notifications\nand data
+        id: cash_flow_system
+        direction: <--
+
+  email_system:
+    title: GMAIL
+    entity: cloud
+    links:
+      - title: Sends emails
+        id: cash_flow_system
+        direction: <--
+
+  dadata_system:
+    title: DADATA
+    entity: cloud
+    links:
+      - title: Queries\nreferential information
+        id: cash_flow_system
+        direction: <--
+
+contexts:
+  LevelContext:
+    title: System Context diagram
+    location: context
+    extra-links: false
+    components:
+      - space_reader
+      - space_redactor
+      - space_owner
+      - cash_flow_system
+      - dadata_system
+      - email_system
+      - external_notification_system
+      - telegram_api
+  LevelComponent:
+    title: System Component diagram
+    location: container
+    extra-links: false
+    components:
+      - space_reader
+      - space_redactor
+      - space_owner
+      - cash_flow_system.*
+      - dadata_system
+      - email_system
+      - external_notification_system
+      - telegram_api
