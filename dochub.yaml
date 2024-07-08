@@ -109,8 +109,110 @@ components:
         id: space_redactor
         direction: <-[#red]-
 
+  cash_flow_system.api_gateway:
+    title: API gateway
+    entity: component
+    links:
+      - title: API\ncalls
+        id: cash_flow_system.web_ui_server
+        direction: <--
+      - title: API\ncalls
+        id: cash_flow_system.mobile_app
+        direction: <--
+      - title: API\ncalls
+        id: cash_flow_system.telegramm_bot
+        direction: <--
+      - title: Expenses CRUD\n[JSON/HTTPS]
+        id: cash_flow_system.expenses
+        direction: -->
+      - title: Accounting CRUD\n[JSON/HTTPS]
+        id: cash_flow_system.accounts
+        direction: -->
+
+  cash_flow_system.keycloack:
+    title: Keycloack
+    entity: component
+    technologies:
+      - Of the shell product
+    links:
+      - title: Querries Oauth token\n[JSON/HTTPS]
+        id: cash_flow_system.web_ui_server
+        direction: <--
+      - title: Querries Oauth token\n[JSON/HTTPS]
+        id: cash_flow_system.mobile_app
+        direction: <--
+      - title: Querries Oauth token\n[JSON/HTTPS]
+        id: cash_flow_system.telegramm_bot
+        direction: <--
+      - title: Makes API calls\n[JSON/HTTPS]
+        id: cash_flow_system.api_gateway
+        direction: <--
+
+  cash_flow_system.expenses:
+    title: Expenses
+    entity: component
+    links:
+      - title: Validate token\n[JSON/HTTPS]
+        id: cash_flow_system.keycloack
+        direction: -->
+      - title: Validate token\n[JSON/HTTPS]
+        id: cash_flow_system.expenses_db
+        direction: -[#maroon]->
+
+  cash_flow_system.expenses_db:
+    title: Expenses DB
+    entity: database
+
+  cash_flow_system.accounts:
+    title: Accounts
+    entity: component
+    links:
+      - title: Validate token\n[JSON/HTTPS]
+        id: cash_flow_system.keycloack
+        direction: -->
+      - title: Validate token\n[JSON/HTTPS]
+        id: cash_flow_system.accounts_db
+        direction: -[#maroon]->
+      - title: Get referential data\n[JSON/HTTPS]
+        id: dadata_system
+        direction: -[#blue]->
+      - title: Get referential data\n[JSON/HTTPS]
+        id: dadata_system
+        direction: -[#blue]->
+      - title: Event notification\n[Kafka Message\n/TCP]
+        id: cash_flow_system.revenues
+        direction: <.[#orange].>
+      - title: Event notification\n[Kafka Message\n/TCP]
+        id: cash_flow_system.expenses
+        direction: <.[#orange].>
+      - title: Get details\nof event\n[JSON/HTTPS]
+        id: cash_flow_system.revenues
+        direction: <-->
+      - title: Get details\nof event\n[JSON/HTTPS]
+        id: cash_flow_system.expenses
+        direction: <-->
+
+  cash_flow_system.accounts_db:
+    title: Accounts DB
+    entity: database
+
+  cash_flow_system.revenues:
+    title: Revenues
+    entity: component
+    links:
+      - title: Validate token\n[JSON/HTTPS]
+        id: cash_flow_system.keycloack
+        direction: -->
+      - title: Validate token\n[JSON/HTTPS]
+        id: cash_flow_system.revenues_db
+        direction: -[#maroon]->
+
+  cash_flow_system.revenues_db:
+    title: Revenues DB
+    entity: database
+
   external_notification_system:
-    title: FCM
+    title: Firebase\nCloud\nMessaging
     entity: cloud
     links:
       - title: Sends notifications\nto customers
